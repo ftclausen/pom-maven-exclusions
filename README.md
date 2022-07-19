@@ -4,7 +4,8 @@
 
 We are migrating from the deprecated Gradle "maven" plugin to the "maven-publish" plugin. The main impediment being we
 used to use `conf2ScopeMappings` to add dependencies and exclusions to the POM. The two issues are 1) the exclusions
-seem no longer available and 2) we can't add to the `test` Maven scope.
+seem no longer available and 2) we can't add to the `test` Maven scope. I should also add that these dependencies and
+exclusions are being added to a custom dependency configuration.
 
 ## POM example
 
