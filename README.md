@@ -1,10 +1,10 @@
-# Replication project for adding to maven pom
+# Gradle replication project for adding to maven pom
 
 ## Background
 
-We are migrating from the deprecated "maven" plugin to the "maven-publish" plugin. The main impediment being we used to
-use `conf2ScopeMappings` to add dependencies and exclusions to the POM. The two issues are 1) the exclusions seem no
-longer available and 2) we can't add to the `test` Maven scope.
+We are migrating from the deprecated Gradle "maven" plugin to the "maven-publish" plugin. The main impediment being we
+used to use `conf2ScopeMappings` to add dependencies and exclusions to the POM. The two issues are 1) the exclusions
+seem no longer available and 2) we can't add to the `test` Maven scope.
 
 ## POM example
 
