@@ -43,7 +43,6 @@ dependencies {
 
 configurations.all {
   exclude group: 'com.example', module: 'module1'
-  exclude group: 'com.example', module: 'module2'
 }
 
 publishing {
@@ -52,7 +51,11 @@ publishing {
       from components.java
 
       project.afterEvaluate {
-        addDependenciesToPom(pom, 'freddieTest', 'test')
+        if (project.hasProperty('useMapToMavenScope')) {
+          mapToMavenScope( 'freddieTest', 'test' )
+        } else {
+          addDependenciesToPom(pom, 'freddieTest', 'test')
+        }
       }
     }
   }
@@ -93,5 +96,15 @@ ext.addDependenciesToPom = { pom, configuration, scope ->
         }
       }
     }
+  }
+}
+
+
+ext.mapToMavenScope = { configuration, scope ->
+  Configuration config = project.getConfigurations(  ).getByName( configuration )
+
+  SoftwareComponent component = project.getComponents().getByName('java')
+  ((AdhocComponentWithVariants) component).addVariantsFromConfiguration(config) {
+    it.mapToMavenScope( scope )
   }
 }
