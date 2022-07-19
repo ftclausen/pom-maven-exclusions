@@ -25,6 +25,7 @@ group = 'example'
 version = '1.0-SNAPSHOT'
 
 configurations {
+  // Create a new configuration to mimick what is happening in the actual project
   freddieTest
 }
 
@@ -38,9 +39,11 @@ dependencies {
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
 
+    // Assign some dependency, anything, to the custom configuration.
     freddieTest 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 }
 
+// Add exclusions to all configurations including custom one
 configurations.all {
   exclude group: 'com.example', module: 'module1'
 }
@@ -71,6 +74,7 @@ test {
     useJUnitPlatform()
 }
 
+// This works except it doesn't add the exclusions - dependency.excludeRules() returns nothing
 ext.addDependenciesToPom = { pom, configuration, scope ->
   println "DEBUG: Processing configuration ${configurations[configuration].name}"
   pom.withXml {
@@ -100,6 +104,7 @@ ext.addDependenciesToPom = { pom, configuration, scope ->
 }
 
 
+// This doesn't work because it only allows compile and runtime scopes
 ext.mapToMavenScope = { configuration, scope ->
   Configuration config = project.getConfigurations(  ).getByName( configuration )
 
